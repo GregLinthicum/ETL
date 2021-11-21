@@ -1,3 +1,15 @@
+...
+Predecesor in the same Notebook
+import findspark
+findspark.init('C:\SparkForWindows\spark-3.2.0-bin-hadoop3.2')
+from pyspark.sql import SparkSession
+from pyspark.sql import functions as F
+from pyspark.context import SparkContext
+sc = SparkContext.getOrCreate()
+spark = SparkSession(sc)
+from pyspark.sql.types import DecimalType, StructField, StructType,FloatType
+...
+
 from pyspark.sql.types import MapType,StringType
 from pyspark.sql.functions import col
 
@@ -57,3 +69,10 @@ df3.show()
 |     id_1|        id_1blah blah blah|
 |     id_2|        id_2blah blah blah|
 +---------+--------------------------+
+
++---------+------------------------------------------------------------------------------+
+|person_id|person_attributes                                                             |
++---------+------------------------------------------------------------------------------+
+|id_1     |{{department=Sales }, { title=Sales_executive }, { level=junior}}             |
+|id_2     |{{department=Engineering }, { title=Software Engineer }, { level=entry-level}}|
++---------+------------------------------------------------------------------------------+
