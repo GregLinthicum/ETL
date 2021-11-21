@@ -59,3 +59,59 @@ df3.show()
 
 df4 = spark.sql("select employee, sum(sales)as sumSal from dftab group by employee")
 df4.show()
+
+print (" **** CORRELATED SUBQUERY :  SELECT employee, COALESCE ((SELECT Max(sales) FROM dftab2 WHERE dftab.employee = dftab2.employee), 0) AS maxSales from dftab  **** ")
+spark.registerDataFrameAsTable(df2, "dftab2")
+df7 = spark.sql("SELECT employee, COALESCE ((SELECT Max(sales) FROM dftab2 WHERE dftab.ID = dftab2.ID), 0) AS maxSales from dftab")
+df7.show()
+
+
+================
+
++-----+--------+---+
+|sales|employee| ID|
++-----+--------+---+
+| 10.2|    Fred|123|
+| 20.2|    Lary|223|
+| 30.2|    Fred|523|
++-----+--------+---+
+
++-----+--------+---+----------+---+---+
+|sales|employee| ID| semployee|ID2|ID3|
++-----+--------+---+----------+---+---+
+| 10.2|    Fred|123|1394624364|123|128|
+| 20.2|    Lary|223|-892820471|223|228|
+| 30.2|    Fred|523|1394624364|523|528|
++-----+--------+---+----------+---+---+
+
++-----+--------+---+---------+---+---+
+|sales|employee| ID|semployee|ID2|ID3|
++-----+--------+---+---------+---+---+
+| 10.2|    Fred|123|  Fred-AA|123|128|
+| 20.2|    Lary|223|  Lary-AA|223|228|
+| 30.2|    Fred|523|  Fred-AA|523|528|
++-----+--------+---+---------+---+---+
+
++-----+--------+---+----------+
+|sales|employee| ID| iemployee|
++-----+--------+---+----------+
+| 10.2|    Fred|123|1394624364|
+| 20.2|    Lary|223|-892820471|
+| 30.2|    Fred|523|1394624364|
++-----+--------+---+----------+
+
++--------+------------------+
+|employee|            sumSal|
++--------+------------------+
+|    Fred| 40.40000057220459|
+|    Lary|20.200000762939453|
++--------+------------------+
+
+ **** CORRELATED SUBQUERY :  SELECT employee, COALESCE ((SELECT Max(sales) FROM dftab2 WHERE dftab.employee = dftab2.employee), 0) AS maxSales from dftab  **** 
++--------+--------+
+|employee|maxSales|
++--------+--------+
+|    Lary|    20.2|
+|    Fred|    30.2|
+|    Fred|    10.2|
++--------+--------+
