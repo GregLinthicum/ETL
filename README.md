@@ -41,3 +41,4 @@ resultDF.show(10)
 
 [Workshop](https://catalog.us-east-1.prod.workshops.aws/v2/workshops/aaaabcab-5e1e-4bff-b604-781a804763e1/en-US/lab6/custom-transformation)
 
+[pipenv  (maven for Python)](https://medium.com/nerd-for-tech/what-is-pipenv-5b552184852)
