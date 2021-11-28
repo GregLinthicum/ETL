@@ -1,0 +1,56 @@
+
+
+def MyTransform (glueContext, dfc) -> DynamicFrameCollection:
+import random
+import hashlib
+from pyspark.sql.types import IntegerType
+from pyspark.sql.functions import col, lit
+
+df = dfc.select(list(dfc.keys())[0]).toDF()
+print('printing key0')
+df.show(3)
+print('printed key0')
+print('imprimindo o tipo de df')
+print(type(df))
+
+def encrypt_phone(df):
+    '''
+     Criptografa dados de telefone
+    '''
+    if df.withColumn('phone_main', df('phone_main')) is not None:
+        hl = hashlib.sha256()
+        hl.update(df.withColumn('phone_main', df('phone_main'))).encode().hexdigest()
+        hl.update(df.withColumn('phone_alternative', df('phone_alternative'))).encode().hexdigest()
+    return df
+
+# Criar um UDF para encriptar os dados
+from pyspark.sql.functions import udf
+encrypted_udf = udf(encrypt_phone)
+print(encrypted_udf)
+
+# Renomear coluna phone_main e phone_alternative
+df.withColumnRenamed('phone_main', 'old_phone_main') \
+                    .withColumnRenamed('phone_alternative', 'old_phone_alternative')
+
+# Criar novas colunas para dados transformados
+new_df = encrypt_phone(df)
+encrypted = df.withColumn('phone_main', new_df('phone_main'))
+encrypted = df.withColumn('phone_alternative',new_df('phone_alternative'))
+print(encrypted)
+
+# Remover campos sensíveis
+encripted_df = df.drop('cpf_cnpj', 'name', 'nickname', 'old_phone_main', 'old_phone_alternative')
+print(df_encrypted)
+
+# Mascarar email
+print(encripted_df.withColumn('email', df('email')))
+if encripted_df.withColumn('email', df('email')) is not None:
+    masked_df = encripted_df.withColumn('email', lit('****@*****'))
+    
+# Converter spark dataframe para Glue Dynamic Frame e retornar como um dataframe collection
+df_overshadow = DynamicFrame.fromDF(masked_df, glueContext, "df_overshadow")
+
+return (DynamicFrameCollection({"CustomTransform0": df_overshadow}, glueContext))
+
+
+"""     https://stackoverflow.com/questions/67775169/overshadow-data-in-aws-glue-studio     """
