@@ -1,7 +1,8 @@
 # ETL
 
 =========================================================
-When testing Notebooks run the last cel in #11, JupyterNotebook11  that is:
+
+When testing Notebooks run the last cel in #11, [JupyterNotebook11](https://github.com/GregLinthicum/ETL/blob/main/CustomTransformFunction2)  that is:
 %run ./JupyterNotebook12.ipynb
 printTest()
 ## https://coderedirect.com/questions/501971/running-a-jupyter-notebook-from-another-notebook
