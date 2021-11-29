@@ -1,5 +1,14 @@
 # ETL
 
+=========================================================
+When testing Notebooks run the last cel in #11, JupyterNotebook11  that is:
+%run ./JupyterNotebook12.ipynb
+printTest()
+## https://coderedirect.com/questions/501971/running-a-jupyter-notebook-from-another-notebook
+## show_notebook('JupyterNotebook12')
+
+==========================================================
+
 def ConvertDateStringToDate (glueContext, dfc) -> DynamicFrameCollection:
     sparkDF = dfc.select(list(dfc.keys())[0]).toDF()
     sparkDF.createOrReplaceTempView("inputTable")
