@@ -5,6 +5,10 @@
 [PDM project Development Master](https://pypi.org/project/pdm/)
 
 
+# SQL
+https://spark.apache.org/docs/3.0.0/sql-ref-syntax-ddl-create-table-datasource.html
+
+
 # ETL
 
 =========================================================
