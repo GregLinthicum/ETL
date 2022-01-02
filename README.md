@@ -1,5 +1,10 @@
 # Packaging
 
+setuptools
+
+As of today (October 2021), setuptools does not support writing its configuration in pyproject.toml. You still have to either write a setup.py, or a setup.cfg, or a combination of both.
+
+
 [Wheel ( .whl)  in newer than setuptools ](https://packaging.python.org/en/latest/glossary/#term-Distribution-Package)
 
 [PDM project Development Master](https://pypi.org/project/pdm/)
